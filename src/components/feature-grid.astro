@@ -1,0 +1,110 @@
+---
+// @ts-ignore
+import { Picture, Image } from "astro:assets";
+import Card from "@components/card.astro";
+import IntegrationImg from "../assets/integrations.svg?url";
+import FeatureImgOne from "../assets/features/2.png";
+import FeatureImgTwo from "../assets/features/2.png";
+import FeatureImgThree from "../assets/features/3.png";
+---
+
+<div class="mt-24">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
+    Everything you need to <span class="text-indigo-600">start a trading</span>
+  </h2>
+  <p class="text-lg mt-4 text-slate-600">
+    Notifications come with trade buttons included to facilitate trading in record time.
+  </p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-5 mt-16 gap-10">
+  <Card class="lg:col-span-3" color="purple">
+    <Fragment slot="image">
+      <Picture
+        src={FeatureImgOne}
+        alt="Feature image"
+        formats={["avif", "webp"]}
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    </Fragment>
+    <span slot="badge">AlertFriend</span>
+    <span slot="title">Trading Fast Keys</span>
+    <span slot="desc">
+      AlertFriend is a notification and trading bot for Friendtech that 
+      keeps you informed about activities and assists you in making important decisions.
+    </span>
+  </Card>
+  <Card class="lg:col-span-2" color="indigo">
+    <Fragment slot="image">
+      <Picture
+        src={FeatureImgTwo}
+        alt="Feature image"
+        formats={["avif", "webp"]}
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    </Fragment>
+    <span slot="badge">Creative</span>
+    <span slot="title">Next Level Info</span>
+    <span slot="desc">
+      AlertFriend is a new bot that alert your favorite users
+      and activities.</span
+    >
+  </Card>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 mt-10 gap-10">
+  <Card color="indigo" size="sm">
+    <Fragment slot="image">
+      <Picture
+        src={FeatureImgThree}
+        alt="Feature image"
+        formats={["avif", "webp"]}
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    </Fragment>
+    <span slot="badge">Template</span>
+    <span slot="title">Modern Design</span>
+    <span slot="desc">
+      Try the Fred Bot and be part of a modern system in SocialFi.</span
+    >
+  </Card>
+
+  <Card color="purple" size="sm">
+    <Fragment slot="image">
+      <Picture
+        src={FeatureImgTwo}
+        alt="Feature image"
+        formats={["avif", "webp"]}
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    </Fragment>
+    <span slot="badge">Product</span>
+    <span slot="title">Highlight Features</span>
+    <span slot="desc">
+      You can highlight your features in a trendy grid like this one.</span
+    >
+  </Card>
+
+  <Card size="sm">
+    <Fragment slot="image">
+      <!-- // svg image. cannot use <picture/> as of now -->
+      <Image
+        src={IntegrationImg}
+        alt="Feature image"
+        width="909"
+        height="823"
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    </Fragment>
+    <span slot="badge">Webhooks</span>
+    <span slot="title">+ Integrations</span>
+    <span slot="desc">
+      AlertFriend can be integrated with hundreds of tools.</span
+    >
+  </Card>
+</div>

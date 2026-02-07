@@ -1,0 +1,71 @@
+---
+import Container from "./container.astro";
+import Sectionhead from "./sectionhead.astro";
+import { ArrowIcon } from "./ui/icons";
+
+const faq = [
+  {
+    question: "How does AlertFriend work?",
+    answer:
+      "AlertFriend works by seamlessly integrating with Telegram. Once you add the friendtech user to the bot account, you'll simply start receiving real-time notifications of that user's activities.",
+  },
+  {
+    question: "What are the benefits of using AlertFriend?",
+    answer:
+      "Receiving real-time notifications, staying informed about important decisions, and accessing accurate information promptly. With AlertFriend, users can stay updated on crucial events and activities as they happen, enabling them to make informed decisions and stay ahead of the curve.",
+  },
+  {
+    question: "Which platforms are compatible with AlertFriend?",
+    answer:
+      "Alertfriend is currently on Friendtech and will be on other famous platforms soon.",
+  },
+  {
+    question: "How do I get started with AlertFriend?",
+    answer:
+      "You need to have a Telegram account and add the bot by the name 'alertfriendbot' and follow the instructions.",
+  },
+  {
+    question: "Is there any cost associated with using AlertFriend?",
+    answer:
+    "AlertFriend is free to use with limited user capacity. For additional features and expanded user limits, we offer subscription plans tailored to your needs.",
+  },
+  {
+    question: "How do I cancel or change my notification settings?",
+    answer:
+      "You can manage enabling and disabling or removing users in the bot's settings. To cancel a plan or request a refund, please contact us",
+      
+  },
+  {
+    question: "How does AlertFriend compare to other similar services?",
+    answer:
+      "Fred is a simple and practical bot focused on socialFi notifications, which is why it is good enough and delivers quick, quality information",
+  },
+];
+---
+
+<Container>
+  <Sectionhead>
+    <Fragment slot="title">FAQ</Fragment>
+    <Fragment slot="desc">Frequenty asked questions</Fragment>
+  </Sectionhead>
+
+  <div class="grid divide-y divide-neutral-200 max-w-xl mx-auto mt-8">
+    {
+      faq.map((item) => (
+        <div class="py-5">
+          <details class="group">
+            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
+              <span> {item.question}</span>
+              <span class="transition group-open:rotate-180">
+                <ArrowIcon />
+              </span>
+            </summary>
+            <p class="text-neutral-600 mt-3 group-open:animate-fadeIn">
+              {item.answer}
+            </p>
+          </details>
+        </div>
+      ))
+    }
+  </div>
+</Container>

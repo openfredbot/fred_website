@@ -1,0 +1,142 @@
+---
+import Badge from "@components/ui/badge.astro";
+import { Picture } from "astro:assets";
+import FeatureImg1 from "../assets/features/6.png";
+import FeatureImg2 from "../assets/features/2.png";
+import { Icon } from "astro-icon/components";
+import Link from "@components/ui/link.astro";
+
+const { nomargin } = Astro.props;
+---
+
+<div
+  class:list={[
+    "max-w-4xl mx-auto flex flex-col items-center justify-center",
+    !nomargin && "mt-24",
+  ]}>
+  <Badge color="purple">SIMPLE FEATURES</Badge>
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
+    Manage your Agents
+  </h2>
+  <p class="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">
+    Buy and sell FUN and Sentient Agents, and manage them effortlessly.
+  </p>
+</div>
+
+<div class="grid md:grid-cols-2 py-10">
+  <div class="grid place-items-center">
+    <Picture
+      src={FeatureImg1}
+      alt="Feature Image"
+      formats={["avif", "webp"]}
+      loading="lazy"
+    />
+  </div>
+
+  <div class="grid place-items-center">
+    <div class="max-w-lg">
+      <Badge color="purple" class="-ml-px">Simplified</Badge>
+      <h3 class="text-2xl font-medium mt-4 [text-wrap:balance]">
+        Boost your productivity with our intuitive bot.
+      </h3>
+      <p class="mt-4 text-slate-600 [text-wrap:balance]">
+        Take control of your agents and stay ahead of the curve with our innovative management bot. Access real-time insights, and streamline your workflow effortlessly.
+      </p>
+
+      <ul class="grid mt-6 text-left gap-y-4">
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Intelligent Hold Management</span>
+        </li>
+
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Real-time Information</span>
+        </li>
+
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Security & Privacy</span>
+        </li>
+      </ul>
+      <div class="flex items-center gap-4 mt-6">
+        <Link href="https://t.me/alertfriendbot" target="_blank" size="sm" class="inline-flex items-center group gap-px">
+          <span>Add Bot</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-4 h-4 mt-px group-hover:translate-x-1 transition-transform">
+            <path
+              fill-rule="evenodd"
+              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </Link>
+        <a
+          href="/contact"
+          class="text-sm px-2 transition py-1 text-slate-600 hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 focus-visible:outline-none focus-visible:shadow-outline-indigo rounded-full">
+          Contact</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid md:grid-cols-2 py-10">
+  <div class="grid place-items-center pb-10 md:pb-0 md:order-2">
+    <Picture
+      src={FeatureImg2}
+      alt="Feature Image"
+      formats={["avif", "webp"]}
+      loading="lazy"
+    />
+  </div>
+
+  <div class="grid place-items-center">
+    <div class="max-w-lg">
+      <Badge color="purple" class="-ml-px">Powered Insights</Badge>
+      <h3 class="text-2xl font-medium mt-4 [text-wrap:balance]">
+        Elevate Your Strategy with Intelligent Insights
+      </h3>
+      <p class="mt-4 text-slate-600 [text-wrap:balance]">
+        Leverage precise data to gain a deeper understanding of your agents and optimize your performance.
+      </p>
+      <ul class="grid mt-6 text-left gap-y-4">
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Understand Ownership Dynamics</span>
+        </li>
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Advanced Insights</span>
+        </li>
+        <li class="flex items-center gap-3 text-neutral-800">
+          <Icon name="ph:check-circle-fill" class="w-5 h-5" />
+
+          <span class="text-sm">Accurate information</span>
+        </li>
+      </ul>
+      <div class="flex items-center gap-4 mt-6">
+        <Link href="https://t.me/alertfriendbot" target="_blank" size="sm" class="inline-flex items-center group gap-px">
+          <span>Add Bot</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="w-4 h-4 mt-px group-hover:translate-x-1 transition-transform">
+            <path
+              fill-rule="evenodd"
+              d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </Link>
+      </div>
+    </div>
+  </div>
+</div>

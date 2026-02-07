@@ -1,0 +1,82 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import Sectionhead from "@components/sectionhead.astro";
+import Pricing from "@components/pricing.astro";
+import Faq from "@components/faq.astro";
+import ComparePricing from "@components/compare-pricing.astro";
+import { fade } from "astro:transitions";
+
+const pricing = [
+  {
+    name: "Free",
+    price: "0",
+    desc: "Perfect to Start",
+    color: "indigo",
+    popular: false,
+    features: [
+      "Lifetime free",
+      "Up to 2 users",
+      "Delay Notifications",
+      "Basic Informations",
+      "Community Support",
+    ],
+    button: {
+      text: "Get Started",
+      link: "https://t.me/alertfriendbot",
+    },
+  },
+  {
+    name: "Premium",
+    price: "119",
+    desc: "For serious FT users",
+    popular: false,
+    color: "orange",
+    features: [
+      "All Free Features",
+      "Up to 10 users",
+      "Unlimited Notifications",
+      "Advanced Informations",
+      "Priority Support",
+    ],
+    button: {
+      text: "Get Started",
+      link: "https://t.me/alertfriendbot",
+    },
+  },
+  {
+    name: "Key Holder",
+    price: null,
+    desc: "For Key Holders of the BOT",
+    popular: true,
+    color: "purple",
+    features: [
+      "All Pro Features",
+      "Up to 20 Users",
+      "Unlimited Notifications",
+      "Rare Informations",
+      "24/7 On Support",
+    ],
+    button: {
+      text: "Get Key",
+      link: "https://www.friend.tech/alertfriend",
+    },
+  },
+];
+---
+
+<Layout title="Pricing">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">Pricing</Fragment>
+      <Fragment slot="desc">
+        To activate type /premium in the bot and follow the instructions.
+      </Fragment>
+    </Sectionhead>
+
+    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-screen-lg mt-12">
+      {pricing.map((item) => <Pricing plan={item} />)}
+    </div>
+    <Faq />
+  </Container>
+</Layout>
