@@ -17,29 +17,8 @@ const { title, description = "Open Fred - AI Assistant powered by OpenClaw. Prof
     <title>{title}</title>
     <meta name="generator" content={Astro.generator} />
     
-    <!-- Web3Modal -->
-    <script type="module">
-      import { createWeb3Modal, defaultWagmiConfig } from 'https://unpkg.com/@web3modal/wagmi@4.1.12/dist/index.js'
-      
-      const projectId = 'YOUR_PROJECT_ID'
-      const chains = [{
-        id: 8453,
-        name: 'Base',
-        network: 'base',
-        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-        rpcUrls: {
-          default: { http: ['https://mainnet.base.org'] },
-          public: { http: ['https://mainnet.base.org'] }
-        },
-        blockExplorers: {
-          default: { name: 'BaseScan', url: 'https://basescan.org' }
-        }
-      }]
-      
-      const wagmiConfig = defaultWagmiConfig({ chains, projectId })
-      
-      createWeb3Modal({ wagmiConfig, projectId, chains })
-    </script>
+    <!-- Ethers.js -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
 
     <!-- Theme Script -->
     <script is:inline>

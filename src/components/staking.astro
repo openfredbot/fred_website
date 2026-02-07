@@ -58,7 +58,10 @@ import Container from "@components/container.astro";
               <!-- Connection Status -->
               <div id="connectionStatus" class="text-center">
                 <div class="mb-6">
-                  <w3m-button />
+                  <button id="connectWallet" 
+                          class="rounded-md bg-orange-600 py-3 px-6 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
+                    Connect MetaMask
+                  </button>
                 </div>
                 <p class="text-sm text-gray-600 dark:text-gray-400">
                   Connect your wallet to start staking
@@ -182,29 +185,80 @@ import Container from "@components/container.astro";
   let provider, signer, userAddress;
   let stakingContract, tokenContract;
 
+  // Connect wallet function
+  async function connectWallet() {
+    if (!window.ethereum) {
+      alert('MetaMask is not installed!');
+      return;
+    }
+
+    try {
+      // Request account access
+      const accounts = await window.ethereum.request({ 
+        method: 'eth_requestAccounts' 
+      });
+      
+      if (accounts.length > 0) {
+        await initializeContracts();
+      }
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+    }
+  }
+
   // Initialize when wallet connects
   async function initializeContracts() {
     if (!window.ethereum) return;
     
     try {
-      provider = new ethers.BrowserProvider(window.ethereum);
-      const accounts = await provider.listAccounts();
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      signer = provider.getSigner();
+      userAddress = await signer.getAddress();
       
-      if (accounts.length > 0) {
-        signer = await provider.getSigner();
-        userAddress = await signer.getAddress();
-        
-        stakingContract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
-        tokenContract = new ethers.Contract(FRED_TOKEN, ERC20_ABI, signer);
-        
-        // Show staking form
-        document.getElementById('connectionStatus').classList.add('hidden');
-        document.getElementById('stakingForm').classList.remove('hidden');
-        
-        await updateAllData();
+      // Check if we're on Base network
+      const network = await provider.getNetwork();
+      if (network.chainId !== BASE_CHAIN_ID) {
+        await switchToBase();
       }
+      
+      stakingContract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+      tokenContract = new ethers.Contract(FRED_TOKEN, ERC20_ABI, signer);
+      
+      // Show staking form
+      document.getElementById('connectionStatus').classList.add('hidden');
+      document.getElementById('stakingForm').classList.remove('hidden');
+      
+      await updateAllData();
     } catch (error) {
       console.error('Failed to initialize contracts:', error);
+    }
+  }
+
+  // Switch to Base network
+  async function switchToBase() {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x2105' }], // Base chain ID in hex
+      });
+    } catch (switchError) {
+      // If Base is not added, add it
+      if (switchError.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x2105',
+            chainName: 'Base',
+            nativeCurrency: {
+              name: 'ETH',
+              symbol: 'ETH',
+              decimals: 18
+            },
+            rpcUrls: ['https://mainnet.base.org'],
+            blockExplorerUrls: ['https://basescan.org']
+          }]
+        });
+      }
     }
   }
 
@@ -236,7 +290,7 @@ import Container from "@components/container.astro";
   }
 
   function formatAmount(wei) {
-    const value = parseFloat(ethers.formatEther(wei));
+    const value = parseFloat(ethers.utils.formatEther(wei));
     if (value === 0) return '0.00';
     if (value < 0.01) return value.toFixed(6);
     return value.toLocaleString('en-US', {
@@ -263,13 +317,13 @@ import Container from "@components/container.astro";
   async function setMaxStake() {
     if (!tokenContract || !userAddress) return;
     const balance = await tokenContract.balanceOf(userAddress);
-    document.getElementById('stakeAmount').value = ethers.formatEther(balance);
+    document.getElementById('stakeAmount').value = ethers.utils.formatEther(balance);
   }
 
   async function setMaxUnstake() {
     if (!stakingContract || !userAddress) return;
     const stakeInfo = await stakingContract.getStakeInfo(userAddress);
-    document.getElementById('unstakeAmount').value = ethers.formatEther(stakeInfo[0]);
+    document.getElementById('unstakeAmount').value = ethers.utils.formatEther(stakeInfo[0]);
   }
 
   async function stakeTokens() {
@@ -277,12 +331,12 @@ import Container from "@components/container.astro";
     if (!amount || parseFloat(amount) <= 0) return;
 
     try {
-      const amountWei = ethers.parseEther(amount);
+      const amountWei = ethers.utils.parseEther(amount);
       
       // Check allowance
       const allowance = await tokenContract.allowance(userAddress, STAKING_CONTRACT);
-      if (allowance < amountWei) {
-        const approveTx = await tokenContract.approve(STAKING_CONTRACT, ethers.MaxUint256);
+      if (allowance.lt(amountWei)) {
+        const approveTx = await tokenContract.approve(STAKING_CONTRACT, ethers.constants.MaxUint256);
         await approveTx.wait();
       }
 
@@ -301,7 +355,7 @@ import Container from "@components/container.astro";
     if (!amount || parseFloat(amount) <= 0) return;
 
     try {
-      const amountWei = ethers.parseEther(amount);
+      const amountWei = ethers.utils.parseEther(amount);
       const tx = await stakingContract.unstake(amountWei);
       await tx.wait();
       
@@ -322,25 +376,43 @@ import Container from "@components/container.astro";
     }
   }
 
-  // Listen for wallet connection changes
-  if (window.ethereum) {
-    window.ethereum.on('accountsChanged', (accounts) => {
-      if (accounts.length === 0) {
-        document.getElementById('connectionStatus').classList.remove('hidden');
-        document.getElementById('stakingForm').classList.add('hidden');
-      } else {
-        initializeContracts();
-      }
-    });
+  // Initialize page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add click handler for connect button
+    document.getElementById('connectWallet').addEventListener('click', connectWallet);
+    
+    // Listen for wallet connection changes
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts) => {
+        if (accounts.length === 0) {
+          document.getElementById('connectionStatus').classList.remove('hidden');
+          document.getElementById('stakingForm').classList.add('hidden');
+        } else {
+          initializeContracts();
+        }
+      });
 
-    // Try to initialize on page load
-    initializeContracts();
-  }
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload();
+      });
+
+      // Check if already connected
+      window.ethereum.request({ method: 'eth_accounts' })
+        .then(accounts => {
+          if (accounts.length > 0) {
+            initializeContracts();
+          }
+        });
+    }
+
+    // Load public stats
+    loadPublicStats();
+  });
 
   // Load public stats
   async function loadPublicStats() {
     try {
-      const rpcProvider = new ethers.JsonRpcProvider('https://mainnet.base.org');
+      const rpcProvider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org');
       const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, rpcProvider);
       const stats = await contract.getContractStats();
       
@@ -351,6 +423,11 @@ import Container from "@components/container.astro";
     }
   }
 
-  // Load public stats on page load
-  loadPublicStats();
+  // Make functions available globally
+  window.switchTab = switchTab;
+  window.setMaxStake = setMaxStake;
+  window.setMaxUnstake = setMaxUnstake;
+  window.stakeTokens = stakeTokens;
+  window.unstakeTokens = unstakeTokens;
+  window.claimRewards = claimRewards;
 </script>
