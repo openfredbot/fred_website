@@ -1,0 +1,356 @@
+---
+import Container from "@components/container.astro";
+---
+
+<section id="staking" class="py-24 bg-white dark:bg-gray-900">
+  <Container>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mx-auto max-w-2xl text-center mb-16">
+        <h2 class="text-base font-semibold leading-7 text-orange-600 dark:text-orange-400">
+          Earn Rewards
+        </h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          Stake $FRED Tokens
+        </p>
+        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+          Earn passive income by staking your $FRED tokens. Support the network and get rewarded with attractive APY.
+        </p>
+      </div>
+
+      <!-- Staking Interface -->
+      <div class="mx-auto max-w-4xl">
+        <div class="grid lg:grid-cols-2 gap-8">
+          
+          <!-- Stats Card -->
+          <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 ring-1 ring-orange-200/20 dark:ring-gray-600/20">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+              Staking Statistics
+            </h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm text-gray-600 dark:text-gray-300">Total Staked</span>
+                  <span class="font-mono text-sm" id="totalStaked">-</span>
+                </div>
+                <div class="bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                  <div class="bg-orange-500 h-2 rounded-full w-0" id="stakedProgress"></div>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center p-4 bg-white dark:bg-gray-800 rounded-lg">
+                  <div class="text-2xl font-bold text-orange-500" id="apy">30%</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">APY</div>
+                </div>
+                <div class="text-center p-4 bg-white dark:bg-gray-800 rounded-lg">
+                  <div class="text-2xl font-bold text-green-500" id="rewardPool">-</div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">Reward Pool</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Staking Actions -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 ring-1 ring-gray-200 dark:ring-gray-700">
+            <div class="space-y-6">
+              
+              <!-- Connection Status -->
+              <div id="connectionStatus" class="text-center">
+                <div class="mb-6">
+                  <w3m-button />
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Connect your wallet to start staking
+                </p>
+              </div>
+
+              <!-- Staking Form (hidden by default) -->
+              <div id="stakingForm" class="hidden space-y-6">
+                
+                <!-- User Stats -->
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                  <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span class="text-gray-600 dark:text-gray-400">Your Balance:</span>
+                      <div class="font-mono" id="userBalance">0 FRED</div>
+                    </div>
+                    <div>
+                      <span class="text-gray-600 dark:text-gray-400">Your Stake:</span>
+                      <div class="font-mono" id="userStake">0 FRED</div>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                    <span class="text-gray-600 dark:text-gray-400">Pending Rewards:</span>
+                    <div class="font-mono text-lg text-green-500" id="pendingRewards">0.00 FRED</div>
+                  </div>
+                </div>
+
+                <!-- Action Tabs -->
+                <div class="border-b border-gray-200 dark:border-gray-700">
+                  <nav class="-mb-px flex space-x-8">
+                    <button onclick="switchTab('stake')" id="stakeTab" 
+                            class="tab-button border-b-2 border-orange-500 py-2 px-1 text-sm font-medium text-orange-600 dark:text-orange-400">
+                      Stake
+                    </button>
+                    <button onclick="switchTab('unstake')" id="unstakeTab"
+                            class="tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+                      Unstake
+                    </button>
+                  </nav>
+                </div>
+
+                <!-- Stake Form -->
+                <div id="stakeForm">
+                  <div class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Amount to Stake</label>
+                      <div class="flex rounded-md ring-1 ring-gray-300 dark:ring-gray-600">
+                        <input type="number" id="stakeAmount" placeholder="0.0"
+                               class="flex-1 border-0 bg-transparent py-3 pl-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm">
+                        <button onclick="setMaxStake()" class="px-4 text-sm font-medium text-orange-600 hover:text-orange-700">
+                          MAX
+                        </button>
+                      </div>
+                    </div>
+                    <button onclick="stakeTokens()" id="stakeBtn" 
+                            class="w-full rounded-md bg-orange-600 py-3 px-4 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                      Stake FRED
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Unstake Form -->
+                <div id="unstakeForm" class="hidden">
+                  <div class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Amount to Unstake</label>
+                      <div class="flex rounded-md ring-1 ring-gray-300 dark:ring-gray-600">
+                        <input type="number" id="unstakeAmount" placeholder="0.0"
+                               class="flex-1 border-0 bg-transparent py-3 pl-4 text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm">
+                        <button onclick="setMaxUnstake()" class="px-4 text-sm font-medium text-orange-600 hover:text-orange-700">
+                          MAX
+                        </button>
+                      </div>
+                    </div>
+                    <button onclick="unstakeTokens()" id="unstakeBtn"
+                            class="w-full rounded-md bg-gray-600 py-3 px-4 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                      Unstake FRED
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Claim Rewards -->
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <button onclick="claimRewards()" id="claimBtn"
+                          class="w-full rounded-md bg-green-600 py-3 px-4 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Claim Rewards
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<!-- Staking JavaScript -->
+<script define:vars={{}}>
+  // Contract Configuration
+  const STAKING_CONTRACT = '0xA31824476d177205d448908a4ec9f6e2fc9274DB';
+  const FRED_TOKEN = '0x3f9BEB72028F52111065c9e9f8684B91Ad19dE9d';
+  const BASE_CHAIN_ID = 8453;
+
+  const STAKING_ABI = [
+    "function stake(uint256 amount) external",
+    "function unstake(uint256 amount) external", 
+    "function claimRewards() external",
+    "function pendingRewards(address user) view returns (uint256)",
+    "function getStakeInfo(address user) view returns (uint256 stakedAmount, uint256 pending, uint256 lastUpdate)",
+    "function getContractStats() view returns (uint256 totalStaked, uint256 rewardPool, uint256 totalRewardsPaid, uint256 apy)"
+  ];
+
+  const ERC20_ABI = [
+    "function balanceOf(address) view returns (uint256)",
+    "function approve(address spender, uint256 amount) returns (bool)",
+    "function allowance(address owner, address spender) view returns (uint256)"
+  ];
+
+  let provider, signer, userAddress;
+  let stakingContract, tokenContract;
+
+  // Initialize when wallet connects
+  async function initializeContracts() {
+    if (!window.ethereum) return;
+    
+    try {
+      provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.listAccounts();
+      
+      if (accounts.length > 0) {
+        signer = await provider.getSigner();
+        userAddress = await signer.getAddress();
+        
+        stakingContract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+        tokenContract = new ethers.Contract(FRED_TOKEN, ERC20_ABI, signer);
+        
+        // Show staking form
+        document.getElementById('connectionStatus').classList.add('hidden');
+        document.getElementById('stakingForm').classList.remove('hidden');
+        
+        await updateAllData();
+      }
+    } catch (error) {
+      console.error('Failed to initialize contracts:', error);
+    }
+  }
+
+  async function updateAllData() {
+    if (!userAddress || !tokenContract || !stakingContract) return;
+
+    try {
+      const [balance, stakeInfo, stats] = await Promise.all([
+        tokenContract.balanceOf(userAddress),
+        stakingContract.getStakeInfo(userAddress), 
+        stakingContract.getContractStats()
+      ]);
+
+      // Update UI
+      document.getElementById('userBalance').textContent = formatAmount(balance) + ' FRED';
+      document.getElementById('userStake').textContent = formatAmount(stakeInfo[0]) + ' FRED';
+      document.getElementById('pendingRewards').textContent = formatAmount(stakeInfo[1]) + ' FRED';
+      document.getElementById('totalStaked').textContent = formatAmount(stats[0]) + ' FRED';
+      document.getElementById('rewardPool').textContent = formatAmount(stats[1]) + ' FRED';
+
+      // Update button states
+      document.getElementById('stakeBtn').disabled = balance === 0n;
+      document.getElementById('unstakeBtn').disabled = stakeInfo[0] === 0n;
+      document.getElementById('claimBtn').disabled = stakeInfo[1] === 0n;
+
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  }
+
+  function formatAmount(wei) {
+    const value = parseFloat(ethers.formatEther(wei));
+    if (value === 0) return '0.00';
+    if (value < 0.01) return value.toFixed(6);
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function switchTab(tab) {
+    // Update tab buttons
+    document.getElementById('stakeTab').className = tab === 'stake' 
+      ? 'tab-button border-b-2 border-orange-500 py-2 px-1 text-sm font-medium text-orange-600 dark:text-orange-400'
+      : 'tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300';
+    
+    document.getElementById('unstakeTab').className = tab === 'unstake'
+      ? 'tab-button border-b-2 border-orange-500 py-2 px-1 text-sm font-medium text-orange-600 dark:text-orange-400' 
+      : 'tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300';
+
+    // Show/hide forms
+    document.getElementById('stakeForm').style.display = tab === 'stake' ? 'block' : 'none';
+    document.getElementById('unstakeForm').style.display = tab === 'unstake' ? 'block' : 'none';
+  }
+
+  async function setMaxStake() {
+    if (!tokenContract || !userAddress) return;
+    const balance = await tokenContract.balanceOf(userAddress);
+    document.getElementById('stakeAmount').value = ethers.formatEther(balance);
+  }
+
+  async function setMaxUnstake() {
+    if (!stakingContract || !userAddress) return;
+    const stakeInfo = await stakingContract.getStakeInfo(userAddress);
+    document.getElementById('unstakeAmount').value = ethers.formatEther(stakeInfo[0]);
+  }
+
+  async function stakeTokens() {
+    const amount = document.getElementById('stakeAmount').value;
+    if (!amount || parseFloat(amount) <= 0) return;
+
+    try {
+      const amountWei = ethers.parseEther(amount);
+      
+      // Check allowance
+      const allowance = await tokenContract.allowance(userAddress, STAKING_CONTRACT);
+      if (allowance < amountWei) {
+        const approveTx = await tokenContract.approve(STAKING_CONTRACT, ethers.MaxUint256);
+        await approveTx.wait();
+      }
+
+      const tx = await stakingContract.stake(amountWei);
+      await tx.wait();
+      
+      document.getElementById('stakeAmount').value = '';
+      await updateAllData();
+    } catch (error) {
+      console.error('Stake error:', error);
+    }
+  }
+
+  async function unstakeTokens() {
+    const amount = document.getElementById('unstakeAmount').value;
+    if (!amount || parseFloat(amount) <= 0) return;
+
+    try {
+      const amountWei = ethers.parseEther(amount);
+      const tx = await stakingContract.unstake(amountWei);
+      await tx.wait();
+      
+      document.getElementById('unstakeAmount').value = '';
+      await updateAllData();
+    } catch (error) {
+      console.error('Unstake error:', error);
+    }
+  }
+
+  async function claimRewards() {
+    try {
+      const tx = await stakingContract.claimRewards();
+      await tx.wait();
+      await updateAllData();
+    } catch (error) {
+      console.error('Claim error:', error);
+    }
+  }
+
+  // Listen for wallet connection changes
+  if (window.ethereum) {
+    window.ethereum.on('accountsChanged', (accounts) => {
+      if (accounts.length === 0) {
+        document.getElementById('connectionStatus').classList.remove('hidden');
+        document.getElementById('stakingForm').classList.add('hidden');
+      } else {
+        initializeContracts();
+      }
+    });
+
+    // Try to initialize on page load
+    initializeContracts();
+  }
+
+  // Load public stats
+  async function loadPublicStats() {
+    try {
+      const rpcProvider = new ethers.JsonRpcProvider('https://mainnet.base.org');
+      const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, rpcProvider);
+      const stats = await contract.getContractStats();
+      
+      document.getElementById('totalStaked').textContent = formatAmount(stats[0]) + ' FRED';
+      document.getElementById('rewardPool').textContent = formatAmount(stats[1]) + ' FRED';
+    } catch (e) {
+      console.error('Failed to load stats:', e);
+    }
+  }
+
+  // Load public stats on page load
+  loadPublicStats();
+</script>

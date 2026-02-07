@@ -1,118 +1,134 @@
-# Astroship Pro
+# 🦊 Open Fred - Professional AI Assistant
 
-Astroship Pro is a Pro version of Popular Free Astroship Starter Template which was made for startups, marketing websites, landing pages & blog. Built with Astro & TailwindCSS.
+Modern, responsive website for Open Fred AI Assistant with integrated Web3 staking functionality.
 
-This Pro Template is made by [Web3Templates](https://web3templates.com)
+## ✨ Features
 
-## Live Demo
+- **🌗 Dark/Light Mode** - Toggle between dark and light themes
+- **🔗 Web3 Integration** - Connect wallet and interact with Base network
+- **💰 Staking System** - Stake $FRED tokens for 30% APY rewards  
+- **📱 Responsive Design** - Optimized for all devices
+- **⚡ Fast Loading** - Built with Astro for optimal performance
+- **🎨 Modern UI** - Clean, professional design with Tailwind CSS
 
-### [Astroship Pro Live Demo](https://astroship-pro.web3templates.com/)
+## 🛠 Tech Stack
 
-### [Buy Astroship Pro Template](https://web3templates.com/templates/astroship-pro-astro-saas-website-template)
+- **Framework**: [Astro](https://astro.build)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+- **Web3**: [Web3Modal](https://web3modal.com) + [Ethers.js](https://ethers.org)
+- **Network**: [Base](https://base.org) (Chain ID: 8453)
+- **Fonts**: [Inter Variable](https://rsms.me/inter/)
 
-#### [Get Free Version](https://web3templates.com/templates/astroship-starter-website-template-for-astro)
-
-## Preview
-
-![astroship-pro-preview](https://github.com/web3templates/astroship-pro/assets/1884712/17ca044c-c8ce-4a0a-8780-f078c2ef0cc4)
-
-## Installation
-
-If you are already have github access, you can click on the "Fork" button above to create a new repository from astroship to your account. Then you can do a `git clone` to clone it to your local system.
-
-Alternatively, you can clone the project directly from the github repo to your local system. make sure you have github repo access. Send an email to hello@web3templates.com to get github repo access.
-
-### 1. Clone the repo
+## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/web3templates/astroship-pro.git myProjectName
-# or
-git clone https://github.com/web3templates/astroship-pro.git .
-```
-
-The `.` will clone it to the current directory so make sure you are inside your project folder first.
-
-> Note: If you are reading this on a downloaded zip file after purchase, just skip this step and start installing npm from the next step.
-
-### 2. Install Dependencies
-
-```bash
+# Install dependencies
 npm install
-# or
-yarn install
-# or (recommended)
-pnpm install
-```
 
-### 3. Start development Server
-
-```bash
+# Start development server
 npm run dev
-# or
-yarn dev
-# or (recommended)
-pnpm dev
-```
 
-### Preview & Build
-
-```bash
-npm run preview
+# Build for production
 npm run build
-# or
-yarn preview
-yarn build
-# or (recommended)
-pnpm preview
-pnpm build
+
+# Preview production build
+npm run preview
 ```
 
-We recommend using [pnpm](https://pnpm.io/) to save disk space on your computer.
+## 💰 Smart Contracts
 
-### Other Commands
+- **$FRED Token**: `0x3f9BEB72028F52111065c9e9f8684B91Ad19dE9d`
+- **Staking Contract**: `0xA31824476d177205d448908a4ec9f6e2fc9274DB`
+- **Network**: Base Mainnet (Chain ID: 8453)
 
-```bash
-pnpm astro ...
-pnpm astro add
-pnpm astro --help
+## 🎯 Key Features
+
+### Staking System
+- **APY**: 30% annual percentage yield
+- **Minimum**: No minimum staking amount
+- **Lock Period**: No lock period - unstake anytime
+- **Rewards**: Automatically calculated and claimable
+- **Contract**: Verified on BaseScan
+
+### Web3 Integration  
+- **Wallet Support**: MetaMask, Coinbase Wallet, WalletConnect
+- **Network**: Automatic Base network switching
+- **Real-time**: Live balance and staking data
+- **Secure**: Client-side only, no private key storage
+
+### Design System
+- **Colors**: Orange primary, gray neutrals
+- **Typography**: Inter font family
+- **Components**: Modular, reusable components
+- **Responsive**: Mobile-first design approach
+- **Accessibility**: WCAG compliant elements
+
+## 📁 Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── hero.astro      # Landing hero section
+│   ├── features.astro  # Features showcase
+│   ├── staking.astro   # Staking interface
+│   ├── footer.astro    # Site footer
+│   └── container.astro # Layout container
+├── layouts/
+│   └── Layout.astro    # Base page layout
+├── pages/
+│   └── index.astro     # Homepage
+└── assets/             # Images and static assets
 ```
 
-## Project Structure
+## 🌟 What's New
 
-Inside of your Astro project, you'll see the following folders and files:
+This is a complete redesign focusing on:
 
-```
-/
-├── public/
-│   └── ...
-├── src/
-│   ├── components/
-│   │   └── ...
-│   ├── layouts/
-│   │   └── ...
-│   └── pages/
-│       └── ...
-└── package.json
-```
+- ✅ **Removed**: FriendTech references (discontinued)
+- ✅ **Removed**: Blog section (unused)  
+- ✅ **Removed**: Pricing page (not needed)
+- ✅ **Added**: Dark/light mode toggle
+- ✅ **Added**: Integrated staking interface
+- ✅ **Added**: Modern, professional design
+- ✅ **Added**: Web3 wallet connection
+- ✅ **Improved**: Mobile responsiveness
+- ✅ **Improved**: Performance and SEO
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🔧 Configuration
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Web3Modal Setup
+Update the `projectId` in `src/layouts/Layout.astro` with your WalletConnect project ID.
 
-## TailwindCSS
+### Deployment
+The site is configured for static deployment and can be hosted on:
+- GitHub Pages
+- Vercel
+- Netlify 
+- Any static hosting provider
 
-TailwindCSS is already configured in this repo, so you can start using it without any installation.
+## 📱 Browser Support
 
-## Versions
+- Chrome/Chromium 88+
+- Firefox 78+
+- Safari 14+
+- Edge 88+
 
-Current version: v2.0.0
+## 🤝 Contributing
 
-## Credits
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -am 'Add feature'`
+4. Push to branch: `git push origin feature-name`
+5. Submit a Pull Request
 
-[Unsplash](https://unsplash.com)
+## 📄 License
 
-## 👀 Want to learn more?
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Feel free to check out [Astro Docs](https://docs.astro.build) or jump into our [Discord Chat](https://web3templates.com/discord).
+## 🦞 Powered by OpenClaw
 
-[![Built with Astro](https://astro.badg.es/v1/built-with-astro.svg)](https://astro.build)
+Built with [OpenClaw](https://openclaw.ai) - Professional AI assistant framework.
+
+---
+
+Made with 🦊 by Open Fred

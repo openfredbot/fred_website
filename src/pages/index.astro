@@ -1,20 +1,14 @@
 ---
-import Container from "@components/container.astro";
-import Cta from "@components/cta.astro";
-import FeatureAlt from "@components/feature-alt.astro";
-import FeatureGrid from "@components/feature-grid.astro";
-import Features from "@components/features.astro";
-import Footer from "@components/footer.astro";
-import Hero from "@components/hero.astro";
-import Logos from "@components/logos.astro";
 import Layout from "@layouts/Layout.astro";
+import Hero from "@components/hero.astro";
+import Features from "@components/features.astro";
+import Staking from "@components/staking.astro";
+import Footer from "@components/footer.astro";
 ---
 
-<Layout footerMargin={false}>
+<Layout title="Open Fred - AI Assistant & Virtual Agent">
   <Hero />
-  <Container>
-    <FeatureAlt/>
-    <Features />
-  </Container>
-  <Cta />
+  <Features />
+  <Staking />
+  <Footer />
 </Layout>

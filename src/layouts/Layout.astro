@@ -1,71 +1,90 @@
 ---
-import { ViewTransitions } from "astro:transitions";
-import { SEO } from "astro-seo";
-import Footer from "@components/footer.astro";
-import Navbar from "@components/navbar/navbar.astro";
-
-import "@fontsource-variable/inter/index.css";
-
 export interface Props {
-  title?: string;
-  footerMargin?: boolean;
+  title: string;
+  description?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
-const resolvedImageWithDomain = new URL(
-  "/opengraph.jpg",
-  Astro.site,
-).toString();
-
-const { title, footerMargin = true } = Astro.props;
-
-const makeTitle = title
-  ? title + " | " + "AlertFriend"
-  : "Alertfriend - Notification Bot for FriendTech";
+const { title, description = "Open Fred - AI Assistant powered by OpenClaw. Professional virtual agent services, staking rewards, and automated solutions." } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Web3Modal -->
+    <script type="module">
+      import { createWeb3Modal, defaultWagmiConfig } from 'https://unpkg.com/@web3modal/wagmi@4.1.12/dist/index.js'
+      
+      const projectId = 'YOUR_PROJECT_ID'
+      const chains = [{
+        id: 8453,
+        name: 'Base',
+        network: 'base',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: {
+          default: { http: ['https://mainnet.base.org'] },
+          public: { http: ['https://mainnet.base.org'] }
+        },
+        blockExplorers: {
+          default: { name: 'BaseScan', url: 'https://basescan.org' }
+        }
+      }]
+      
+      const wagmiConfig = defaultWagmiConfig({ chains, projectId })
+      
+      createWeb3Modal({ wagmiConfig, projectId, chains })
+    </script>
 
-    <SEO
-      title={makeTitle}
-      description="Alertfriend - Notification Bot for FriendTech."
-      canonical={canonicalURL}
-      twitter={{
-        creator: "@erisonmeira",
-        site: "alertfriend.com",
-        card: "summary_large_image",
-      }}
-      openGraph={{
-        basic: {
-          url: canonicalURL,
-          type: "website",
-          title: `Alertfriend - Notification Bot for FriendTech`,
-          image: resolvedImageWithDomain,
-        },
-        image: {
-          alt: "AlertFriend Homepage Screenshot",
-        },
-      }}
-    />
-    <style is:global>
-      /* Improve Page speed */
-      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-      img {
-        content-visibility: auto;
+    <!-- Theme Script -->
+    <script is:inline>
+      const getTheme = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      };
+      
+      const theme = getTheme();
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
       }
-    </style>
-    <ViewTransitions />
+      
+      window.localStorage.setItem('theme', theme);
+    </script>
   </head>
-  <body>
-    <Navbar />
-    <slot />
-    <Footer margin={footerMargin} />
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+    <div class="min-h-screen flex flex-col">
+      <slot />
+    </div>
+
+    <!-- Theme Toggle Script -->
+    <script is:inline>
+      function toggleTheme() {
+        const current = localStorage.getItem('theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        
+        localStorage.setItem('theme', next);
+        
+        if (next === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      
+      // Make available globally
+      window.toggleTheme = toggleTheme;
+    </script>
   </body>
 </html>

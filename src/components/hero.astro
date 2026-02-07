@@ -1,61 +1,78 @@
 ---
-import { Image, Picture } from "astro:assets";
+import { Image } from "astro:assets";
 import botImage from "../assets/bot1.png";
-import Link from "@components/ui/link.astro";
 import Container from "@components/container.astro";
 ---
 
-<div class="overflow-x-clip">
-  <Container>
-    <main class="grid lg:grid-cols-5 place-items-center relative">
-      <div
-        class="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-indigo-200 right-0 top-0">
+<section class="relative overflow-hidden py-20 sm:py-32">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]">
+      <div class="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-orange-400 to-orange-600 opacity-10" 
+           style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%);">
       </div>
-      <div
-        class="absolute w-96 h-96 blur-2xl -z-10 bg-gradient-radial from-purple-200 right-56 top-10">
-      </div>
+    </div>
+  </div>
 
-      <div class="max-w-sm md:max-w-max lg:col-span-2">
-        <h1
-          class="text-3x1 lg:text-4x1 xl:text-5xl font-bold lg:tracking-tight xl:tracking-tighter [text-wrap:balance] text-center lg:text-start px-55" >
-          Trading Bot for Virtuals and Friendtech
-        </h1>
-        <p
-          class="text-lg mt-4 max-w-lg text-slate-600 [text-wrap:balance] text-center lg:text-start">
-          Alert Friend started on Friendtech and now brings its expertise to Virtual Agents. Using IP from the Nakamigos Collection, it offers insights to enhance your trading decisions.
-          <br><br>You can also call him 'Fred'.<br> Fred is 100% customizable by you.
-        </p>
-        <div
-          class="mt-6 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-3">
-          <Link
-            href="https://t.me/alertfriendbot"
-            target="_blank"
-            class="flex gap-1 items-center justify-center"
-            rel="noopener">
-            Add Bot
-          </Link>
-          <Link
-            size="lg"
-            style="outline"
-            rel="noopener"
-            href="https://t.me/alertfriendbot"
-            class="flex gap-1 items-center justify-center"
-            target="_blank">
-            Free Version
-          </Link>
+  <Container>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center lg:max-w-none lg:text-left">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8 lg:items-center">
+          
+          <!-- Content -->
+          <div class="lg:col-span-6">
+            <!-- Theme Toggle Button -->
+            <div class="mb-6 flex justify-center lg:justify-start">
+              <button 
+                onclick="toggleTheme()" 
+                class="inline-flex items-center gap-2 rounded-full bg-gray-100 dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                id="theme-toggle"
+              >
+                <svg class="h-4 w-4 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                </svg>
+                <svg class="h-4 w-4 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span class="hidden dark:inline">Light</span>
+                <span class="inline dark:hidden">Dark</span>
+              </button>
+            </div>
+
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
+              Open <span class="text-orange-500">Fred</span>
+            </h1>
+            <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl">
+              Professional AI Assistant powered by OpenClaw. Advanced virtual agent capabilities, automated solutions, and DeFi integrations. 
+            </p>
+            <p class="mt-4 text-base leading-7 text-gray-500 dark:text-gray-400">
+              🦊 <strong>100% customizable</strong> • Built on cutting-edge AI technology
+            </p>
+            
+            <div class="mt-10 flex items-center gap-x-6 justify-center lg:justify-start">
+              <w3m-button />
+              <a href="#features" class="text-sm font-semibold leading-6 text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors">
+                Learn more <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="mt-16 lg:mt-0 lg:col-span-6">
+            <div class="relative mx-auto max-w-lg lg:max-w-none">
+              <div class="absolute inset-0 bg-gradient-to-tr from-orange-400 to-orange-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+              <Image 
+                src={botImage} 
+                alt="Open Fred AI Assistant"
+                class="relative w-full h-auto rounded-2xl shadow-2xl"
+                format="webp"
+                quality={85}
+              />
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="py-10 lg:col-span-3 lg:-mr-44">
-        <Picture
-          src={botImage}
-          alt="AlertFriend Notify"
-          formats={["avif", "webp"]}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          widths={[240, 540, 720, botImage.width]}
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-    </main>
+    </div>
   </Container>
-</div>
+</section>

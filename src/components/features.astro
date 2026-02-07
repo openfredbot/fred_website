@@ -1,61 +1,89 @@
 ---
-// @ts-ignore
-import Badge from "@components/ui/badge.astro";
-import { Icon } from "astro-icon/components";
+import Container from "@components/container.astro";
 
 const features = [
   {
-    title: "Add Bot on Telegram",
-    description:
-      "Find the username by searching for 'alertfriendbot' and add them to your Telegram.",
-    icon: "ph:telegram-logo",
+    title: "AI-Powered Automation",
+    description: "Advanced artificial intelligence capabilities for complex task automation, decision making, and intelligent workflows.",
+    icon: "🤖"
   },
   {
-    title: "Paste the Virtual Contract Address",
-    description:
-      "Just type the contract address in your Telegram chat.",
-    icon: "fluent:bot-add-20-regular",
+    title: "Web3 Native",
+    description: "Built-in wallet integration, DeFi protocols support, and blockchain interactions with enterprise-grade security.",
+    icon: "🔗"
   },
   {
-    title: "Manage your Agents",
-    description:
-      "Manage your agents in the Trade Menu using /agent.",
-    icon: "fluent:task-list-square-settings-20-regular",
+    title: "Stake & Earn",
+    description: "Stake $FRED tokens to earn passive rewards while contributing to the network's decentralized infrastructure.",
+    icon: "💰"
   },
-  
+  {
+    title: "24/7 Availability",
+    description: "Always-on virtual agent that never sleeps, providing continuous monitoring and instant response capabilities.",
+    icon: "⚡"
+  },
+  {
+    title: "Custom Integration",
+    description: "Flexible API and webhook system for seamless integration with your existing tools and workflows.",
+    icon: "🔧"
+  },
+  {
+    title: "OpenClaw Powered",
+    description: "Built on the OpenClaw framework, ensuring scalability, reliability, and cutting-edge AI capabilities.",
+    icon: "🦞"
+  }
 ];
 ---
 
-<!-- <div class="mt-16">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-    We have got more awesome <span class="text-indigo-600">features</span>
-  </h2>
-  <p class="text-lg mt-4 text-slate-600">
-    Use this section to highlight not so important features of your product.
-  </p>
-</div> -->
-<div class="mt-20 max-w-3xl mx-auto flex flex-col items-center justify-center">
-  <Badge color="purple">REAL-TIME</Badge>
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-4 text-center">
-  Everything you need to know to get started
-  </h2>
-  <p class="text-lg mt-4 text-slate-600 text-center [text-wrap:pretty]">
-    By adding the bot, you can trade FUN Agents and Sentient Agents in real time, benefiting from valuable insights and information   
-  </p>
-</div>
+<section id="features" class="py-24 bg-gray-50 dark:bg-gray-800/50">
+  <Container>
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-base font-semibold leading-7 text-orange-600 dark:text-orange-400">
+          Capabilities
+        </h2>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          Next-Generation AI Assistant
+        </p>
+        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+          Discover the advanced features that make Open Fred the perfect virtual agent for modern businesses and individuals.
+        </p>
+      </div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-8 md:gap-16">
-  {
-    features.map((item) => (
-      <div class="flex flex-col gap-4 items-start group hover:bg-slate-50 hover:border-slate-100 border border-transparent rounded-lg transition-all md:-m-5 p-5">
-        <div class="mt-1 bg-indigo-50 border shadow shadow-indigo-100/50 border-indigo-100 transition-colors rounded-lg grid place-items-center  p-2 w-10 h-10 shrink-0">
-          <Icon class="text-indigo-500" name={item.icon} size="24" />
-        </div>
-        <div>
-          <h3 class="font-semibold text-lg">{item.title}</h3>{" "}
-          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
+      <!-- Features Grid -->
+      <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+          {features.map((feature) => (
+            <div class="flex flex-col group">
+              <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-orange-500/10 dark:bg-orange-400/10 ring-1 ring-orange-500/20 dark:ring-orange-400/20 group-hover:bg-orange-500/20 dark:group-hover:bg-orange-400/20 transition-colors">
+                  <span class="text-2xl" aria-hidden="true">{feature.icon}</span>
+                </div>
+                {feature.title}
+              </dt>
+              <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-300">
+                <p class="flex-auto">{feature.description}</p>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mt-20 text-center">
+        <div class="mx-auto max-w-2xl">
+          <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Ready to get started?
+          </h3>
+          <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            Connect your wallet and join the Open Fred ecosystem. Stake tokens, access premium features, and experience the future of AI assistance.
+          </p>
+          <div class="mt-8 flex justify-center">
+            <w3m-button size="md" />
+          </div>
         </div>
       </div>
-    ))
-  }
-</div>
+    </div>
+  </Container>
+</section>
